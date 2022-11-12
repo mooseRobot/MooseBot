@@ -9,8 +9,6 @@ user_agent="",
 username="",
 )
 
-reddit.read_only = True
-
 ###### Global Grab Functions ######
 async def cag_grab(subr = "", lim=0):
     global gallery_url
@@ -39,18 +37,14 @@ async def cag_grab(subr = "", lim=0):
         return gallery_url
 
 async def post_type(subreddit) -> str:
-    global upvotes
-    global post_url
-    global redditor
-    global body
-    global title
+    global upvotes, post_url, redditor, body, title, text_post
+
     upvotes = 0
     post_url = ""
     redditor = None
     body = ""
     title = ""
 
-    global text_post
     text_post = False
 
     hot_posts = reddit.subreddit(subreddit).hot(limit = 1)
@@ -64,7 +58,6 @@ async def post_type(subreddit) -> str:
             text_post = True
         else:
             await cag_grab(subr = subreddit, lim=1)
-
 
 class Cag(commands.Cog):
 
@@ -88,8 +81,6 @@ class Cag(commands.Cog):
     @commands.command()
     async def cagf(self, ctx):
         await ctx.channel.send("Grabbing image <:masaka:706682412943540244>", delete_after=2)
-
-        # Calls global function cag_grab with parameter
         await cag_grab(subr = "kpopfap", lim=3)
         await ctx.channel.send(title)
         if len(gallery) > 0:
@@ -106,11 +97,11 @@ class Cag(commands.Cog):
             await post_type(subreddit)
             text = text_post
             if text == True:
-                MyEmbed = discord.Embed(title=f"{title}", url=f"{post_url}", color=0xbd0000)
-                MyEmbed.set_author(name=f"r/{subreddit}")
-                MyEmbed.add_field(name = f"{upvotes} upvotes", value = f"{body}")
-                await ctx.send(embed=MyEmbed)
-                text = False
+                    MyEmbed = discord.Embed(title=f"{title}", url=f"{post_url}", color=0xbd0000)
+                    MyEmbed.set_author(name=f"r/{subreddit}")
+                    MyEmbed.add_field(name = f"{upvotes} upvotes", value = f"{body}")
+                    await ctx.send(embed=MyEmbed)
+                    text = False
             else:
                 await ctx.channel.send(title)
                 if len(gallery) > 0:
