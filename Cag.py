@@ -11,8 +11,7 @@ username="",
 
 ###### Global Grab Functions ######
 async def cag_grab(subr = "", lim=0):
-    global gallery_url
-    global title
+    global gallery_url, title
     gallery_url  = ""
     title = ""
     hot_posts = reddit.subreddit(subr).hot(limit = lim)
@@ -46,18 +45,23 @@ async def post_type(subreddit) -> str:
     title = ""
 
     text_post = False
-
-    hot_posts = reddit.subreddit(subreddit).hot(limit = 1)
+    post_count = 0
+    hot_posts = reddit.subreddit(subreddit).hot(limit = 5)
     for post in hot_posts:
-        if post.is_self:
+        post_count += 1
+        if post.stickied == True:
+            pass
+        elif post.is_self:
             redditor = post.author # redditor.name
             upvotes = post.score
             post_url = post.url
             body = post.selftext 
             title = post.title
             text_post = True
+            break
         else:
-            await cag_grab(subr = subreddit, lim=1)
+            await cag_grab(subr = subreddit, lim=post_count)
+            break
 
 class Cag(commands.Cog):
 
@@ -97,11 +101,27 @@ class Cag(commands.Cog):
             await post_type(subreddit)
             text = text_post
             if text == True:
-                    MyEmbed = discord.Embed(title=f"{title}", url=f"{post_url}", color=0xbd0000)
+                if len(body) < 999: # Checks if body is over embed's character limit
+                    MyEmbed = discord.Embed(title=f"{title}", url=f"{post_url}", description="", color=0xbd0000)
                     MyEmbed.set_author(name=f"r/{subreddit}")
-                    MyEmbed.add_field(name = f"{upvotes} upvotes", value = f"{body}")
+                    MyEmbed.add_field(name=f"{upvotes} upvotes", value=f" {body}.")
                     await ctx.send(embed=MyEmbed)
                     text = False
+                elif len(body) > 1999: # Checks if body over discord's character limit
+                    MyEmbed = discord.Embed(title=f"{title}", url=f"{post_url}", description=f"{upvotes} upvotes", color=0xbd0000)
+                    MyEmbed.set_author(name=f"r/{subreddit}")
+                    await ctx.send(embed=MyEmbed)
+                    await ctx.send(f"{body}")
+                else:
+                    messages = len(body) // 1500 # how many times to split the mssage
+                    MyEmbed = discord.Embed(title=f"{title}", url=f"{post_url}", description=f"{upvotes} upvotes", color=0xbd0000)
+                    MyEmbed.set_author(name=f"r/{subreddit}")
+                    await ctx.send(embed=MyEmbed)
+                    for i in range(messages+1):
+                        if i == messages:
+                            await ctx.send(f"{body[1500:]}") # sends last 1500 characters of post
+                        else:
+                            await ctx.send(f'{body[i*1500:1500]}') # Sends posts in 1500 character intervals
             else:
                 await ctx.channel.send(title)
                 if len(gallery) > 0:
@@ -109,6 +129,21 @@ class Cag(commands.Cog):
                         await ctx.channel.send(url)
                 else:
                     await ctx.channel.send(gallery_url)
+
+    @commands.command()
+    async def tst(self, ctx):
+        title = 'he'
+        post_url = 'https://www.reddit.com/r/AskReddit/comments/ysj9ux/what_is_the_worst_feeling_ever/'
+        subreddit = 'ask'
+        upvotes = 1000
+        body= '123478324'
+        user = "asda"
+        #MyEmbed = discord.Embed(title="MooseBot Commands", url="https://github.com/mooseRobot/MooseBot", description="Available commands for MooseBot", color=0xbd0000)
+        MyEmbed = discord.Embed(title=f"{title}", url=f"{post_url}", description=f"{user}", color=0xbd0000)
+        #MyEmbed = discord.Embed(title=f"{title}", url=f"{post_url}", description=f"{user}", color=0xbd0000)
+        #MyEmbed.set_author(name=f"r/{subreddit}")
+        MyEmbed.add_field(name = f"{upvotes} upvotes", value = f"{body}")
+        await ctx.send(embed=MyEmbed)
 
 def setup(bot):
     bot.add_cog(Cag(bot))
