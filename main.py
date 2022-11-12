@@ -8,7 +8,7 @@ intents.members = True
 bot = commands.Bot(command_prefix=".", intents= intents, help_command = None)
 
 def is_me(ctx): # Checks if user is me
-    return ctx.author.id == 
+    return ctx.author.id == 200135614429921281
 
 ########### Help ###########
 
@@ -38,22 +38,22 @@ async def help(ctx):
 ############################ Events ############################
 
 @bot.event 
-async def on_ready():
+async def on_ready(): # When bot is ready
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name='out for .help'))
     print("Bot ready!")
 
 @bot.event
 async def on_member_join(member):
     """
-    Welcomes user when they join a server
+    Welcome user when they join a server
     """
     guild = member.guild 
     guildname = guild.name
     # dmchannel = await member.create_dm() # creaing a dmchannel to dm a message. Needs await since its an async func
     # await dmchannel.send(f"Welcome to {guildname}") # Welcomes member
     print(f"{member.name} has joined {guildname}")
-    await bot.get_channel().send(f"Welcome {member.mention} to {guildname}!")
-    await bot.get_channel().send("https://cdn.discordapp.com/attachments/837198834593431573/1039890752563589190/IMG_17012018_223941_0.png")
+    await bot.get_channel(291813712338354176).send(f"Welcome {member.mention} to {guildname}!")
+    await bot.get_channel(291813712338354176).send("https://cdn.discordapp.com/attachments/837198834593431573/1039890752563589190/IMG_17012018_223941_0.png")
 
 
 ##################################################################
@@ -105,7 +105,7 @@ async def voicekick(ctx, user : discord.Member):
         await ctx.channel.send("You must be in the same voice channel to use this command!")
 
     elif ctx.author.voice.channel.name == user.voice.channel.name:
-        if ctx.author.roles[-1] >= guild.roles[-3]: # specific sets if ctx role is higher than my server (nsfw) role then can execute command
+        if ctx.author.roles[-1] >= guild.roles[-3]: # specific sets if ctx role is higher than KKK (nsfw) role then can execute command
             await user.edit(voice_channel = None)
             await ctx.channel.send(f"Kicked {user.mention}!")
         else:
@@ -129,7 +129,7 @@ async def kick(ctx, user : discord.Member, *, reason = None):
     Args:
         user (discord.Member): User to kick from voice
         reason (str): Reason for kicking"""
-    if ctx.author.roles[-1] >= ctx.author.guild[-3]:
+    if ctx.author.roles[-1] >= ctx.author.guild[-3]: # specific sets if ctx role is higher than KKK (nsfw) role then can execute command
         await ctx.guild.kick(user, reason=None)
         await ctx.channel.send(f"Kicked {user.mention} from {user.guild}.")
     else:
@@ -145,21 +145,21 @@ async def on_command_error(ctx, error):
 #### Main cog load/unload/reload ###
 @bot.command()
 @commands.check(is_me)
-async def load_main_cog(ctx):
-    bot.load_extension("Cogs")
-    await ctx.send("Main extension loaded.")
-
-@bot.command()
-@commands.check(is_me) # Checks if its me executing the command
-async def unload_main_cog(ctx): # Unloads cog extension from main file
-    bot.unload_extension("Cogs")
-    await ctx.channel.send("Main extention Unloaded.")
+async def load_events(ctx):
+    bot.load_extension("Events")
+    await ctx.send("Events extension loaded.")
 
 @bot.command()
 @commands.check(is_me)
-async def reload_main_cog(ctx):
-    bot.reload_extension("Cogs")
-    await ctx.channel.send("Main extension reloaded.")
+async def unload_events(ctx):
+    bot.unload_extension("Events")
+    await ctx.channel.send("Events extention Unloaded.")
+
+@bot.command()
+@commands.check(is_me)
+async def reload_events(ctx):
+    bot.reload_extension("Events")
+    await ctx.channel.send("Events extension reloaded.")
 
 ### Music cog load/unload/reload ###
 @bot.command()
@@ -200,6 +200,6 @@ async def reload_cag(ctx):
     await ctx.channel.send("Cag extension reloaded")
 
 bot.load_extension('Cag')
-bot.load_extension("Cogs")
+bot.load_extension("Events")
 bot.load_extension("Music")
-bot.run('')
+bot.run('MTAzOTg2NTIzOTU0NzY4Mjg5Ng.GKDLzK.4pnix9lE5JmZBzX1VQ5abP5yysO27--S7i3-gI')
