@@ -25,7 +25,7 @@ async def help(ctx):
     MyEmbed.add_field(name = ".pause", value = "Pauses current song")
     MyEmbed.add_field(name = ".resume", value = "Resume song")
     MyEmbed.add_field(name = ".queue", value = "Shows queue")
-    MyEmbed.add_field(name = ".join", value = "Joins your vc")
+    MyEmbed.add_field(name = ".join", value = "Joins the vc")
     MyEmbed.add_field(name = ".disconnect", value = "Disconnects from vc")
     MyEmbed.add_field(name = ".trending {subreddit}", value = "Pulls top hot post from a subreddit")
     MyEmbed.add_field(name = ".coinflip", value = "Flips a coin")
