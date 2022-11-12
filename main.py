@@ -8,7 +8,7 @@ intents.members = True
 bot = commands.Bot(command_prefix=".", intents= intents, help_command = None)
 
 def is_me(ctx): # Checks if user is me
-    return ctx.author.id == 200135614429921281
+    return ctx.author.id == 
 
 ########### Help ###########
 
@@ -52,8 +52,8 @@ async def on_member_join(member):
     # dmchannel = await member.create_dm() # creaing a dmchannel to dm a message. Needs await since its an async func
     # await dmchannel.send(f"Welcome to {guildname}") # Welcomes member
     print(f"{member.name} has joined {guildname}")
-    await bot.get_channel(291813712338354176).send(f"Welcome {member.mention} to {guildname}!")
-    await bot.get_channel(291813712338354176).send("https://cdn.discordapp.com/attachments/837198834593431573/1039890752563589190/IMG_17012018_223941_0.png")
+    await bot.get_channel().send(f"Welcome {member.mention} to {guildname}!")
+    await bot.get_channel().send("https://cdn.discordapp.com/attachments/837198834593431573/1039890752563589190/IMG_17012018_223941_0.png")
 
 
 ##################################################################
@@ -202,4 +202,4 @@ async def reload_cag(ctx):
 bot.load_extension('Cag')
 bot.load_extension("Events")
 bot.load_extension("Music")
-bot.run('MTAzOTg2NTIzOTU0NzY4Mjg5Ng.GKDLzK.4pnix9lE5JmZBzX1VQ5abP5yysO27--S7i3-gI')
+bot.run('')
