@@ -8,7 +8,7 @@ intents.members = True
 bot = commands.Bot(command_prefix=".", intents= intents, help_command = None)
 
 def is_me(ctx): # Checks if user is me
-    return ctx.author.id == 200135614429921281
+    return ctx.author.id == 
 
 ########### Help ###########
 
