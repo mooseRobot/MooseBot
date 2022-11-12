@@ -8,7 +8,7 @@ intents.members = True
 bot = commands.Bot(command_prefix=".", intents= intents, help_command = None)
 
 def is_me(ctx): # Checks if user is me
-    return ctx.author.id == 
+    return ctx.author.id == 200135614429921281
 
 ########### Help ###########
 
@@ -17,16 +17,17 @@ async def help(ctx):
     """
     Help command
     """
-    MyEmbed = discord.Embed(title = "Commands", description = "Available commands for MooseR\nhttps://github.com/mooseRobot/MooseBot",color = discord.Colour.dark_magenta())
+    MyEmbed = discord.Embed(title="MooseBot Commands", url="https://github.com/mooseRobot/MooseBot", description="Available commands for MooseBot", color=0xbd0000)
+    MyEmbed.set_author(name="Created by mooseRobot", url="https://github.com/mooseRobot", icon_url="https://avatars.githubusercontent.com/u/111679444?s=400&u=e780fac96614dd28ef409f0a6e4f35f234fba5d4&v=4")
     MyEmbed.set_thumbnail(url = "https://cdn.discordapp.com/attachments/837198834593431573/1039890752563589190/IMG_17012018_223941_0.png")
     MyEmbed.add_field(name = ".p {yt url}", value = "Plays youtube song")
-    MyEmbed.add_field(name = ".stop", value = "Skips song")
-    MyEmbed.add_field(name = ".pause", value = "Pauses song")
+    MyEmbed.add_field(name = ".stop", value = "Stop/skips current song")
+    MyEmbed.add_field(name = ".pause", value = "Pauses current song")
     MyEmbed.add_field(name = ".resume", value = "Resume song")
     MyEmbed.add_field(name = ".queue", value = "Shows queue")
     MyEmbed.add_field(name = ".join", value = "Joins your vc")
     MyEmbed.add_field(name = ".disconnect", value = "Disconnects from vc")
-    MyEmbed.add_field(name = ".ping", value = "Replies back with Pong!")
+    MyEmbed.add_field(name = ".trending {subreddit}", value = "Pulls top hot post from a subreddit")
     MyEmbed.add_field(name = ".coinflip", value = "Flips a coin")
     MyEmbed.add_field(name = ".cag", value = "Sends top picture from /r/kpics")
     MyEmbed.add_field(name = ".cagf", value = "For the boys")
@@ -52,8 +53,8 @@ async def on_member_join(member):
     # dmchannel = await member.create_dm() # creaing a dmchannel to dm a message. Needs await since its an async func
     # await dmchannel.send(f"Welcome to {guildname}") # Welcomes member
     print(f"{member.name} has joined {guildname}")
-    await bot.get_channel().send(f"Welcome {member.mention} to {guildname}!")
-    await bot.get_channel().send("https://cdn.discordapp.com/attachments/837198834593431573/1039890752563589190/IMG_17012018_223941_0.png")
+    await bot.get_channel(291813712338354176).send(f"Welcome {member.mention} to {guildname}!")
+    await bot.get_channel(291813712338354176).send("https://cdn.discordapp.com/attachments/837198834593431573/1039890752563589190/IMG_17012018_223941_0.png")
 
 
 ##################################################################
@@ -68,7 +69,6 @@ async def ping(ctx):
     Used for testing purposes
     """
     await ctx.send("Pong!")
-    await ctx.channel.send("Pong!")
 
 # Coinflip Command
 @bot.command()
