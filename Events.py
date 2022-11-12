@@ -1,7 +1,6 @@
 from discord.ext import commands
-import praw
 
-class myCog(commands.Cog):
+class Events(commands.Cog):
     
     def __init__(self, bot):
         self.bot = bot
@@ -25,4 +24,4 @@ class myCog(commands.Cog):
                 await msg.channel.send("https://cdn.discordapp.com/attachments/939096040274034758/1040595616784465960/IMG_4065.jpg")    
 
 def setup(bot):
-    bot.add_cog(myCog(bot))
+    bot.add_cog(Events(bot))
