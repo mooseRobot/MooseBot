@@ -191,6 +191,7 @@ class music(commands.Cog):
         else:
             voice.resume()
 
+
     # Sends queue
     @commands.command()
     async def queue(self, ctx):
