@@ -52,6 +52,23 @@ class music(commands.Cog):
         self.bot = bot
         self.vc_connected = False
 
+    #Help menu
+    @commands.command()
+    async def help_music(self,ctx):
+        embed=discord.Embed(title="Music Commands", description="Available music commands", color = 0x00FFFF)
+        embed.set_author(name=".help_leveling")
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1036894455715868723/1041228686113898546/unknown.png")
+        embed.add_field(name = ".p {yt url}", value = "Plays youtube song")
+        embed.add_field(name = ".stop", value = "Stop/skips current song")
+        embed.add_field(name = ".pause", value = "Pauses current song")
+        embed.add_field(name = ".resume", value = "Resume song")
+        embed.add_field(name = ".queue", value = "Shows queue")
+        embed.add_field(name = ".join", value = "Joins the vc")
+        embed.add_field(name = ".disconnect", value = "Disconnects from vc")
+        embed.add_field(name = ".sigma", value = "Sigma circlejerk")
+        embed.add_field(name = ".voicekick", value = "Starts a vote kick a user from a voice channel")
+        await ctx.send(embed=embed)
+
     # Join user's current voice channel
     @commands.command()
     async def join(self, ctx):
@@ -173,7 +190,7 @@ class music(commands.Cog):
             await ctx.send("Bot is playing Audio!")
         else:
             voice.resume()
-            
+
     # Sends queue
     @commands.command()
     async def queue(self, ctx):
