@@ -46,7 +46,7 @@ async def post_type(subreddit) -> str:
 
     text_post = False
     post_count = 0
-    hot_posts = reddit.subreddit(subreddit).hot(limit = 5)
+    hot_posts = reddit.subreddit(subreddit).hot(limit = 5) # Checks first 5 posts of hot to find a submission
     for post in hot_posts:
         post_count += 1
         if post.stickied == True:
@@ -68,6 +68,16 @@ class Cag(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    @commands.command()
+    async def help_reddit(self, ctx):
+        embed=discord.Embed(title="Reddit Commands", description="Available reddit commands", color = 0x00FFFF)
+        embed.set_author(name=".help_reddit")
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1036894455715868723/1041229224306024509/BFF237AE-6CEC-4F57-891A-0B85A5743DDF.jpg")
+        embed.add_field(name = ".trending {subreddit name}", value = "Pulls top hot post from a subreddit")
+        embed.add_field(name = ".cag", value = "Sends top picture from /r/kpics")
+        embed.add_field(name = ".cagf", value = "For the boys")
+        await ctx.send(embed=embed)
+        
     # Grabs top hot post from r/kpics
     @commands.command()
     async def cag(self, ctx):
