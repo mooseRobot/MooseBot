@@ -1,5 +1,4 @@
 from discord.ext import commands
-
 class Events(commands.Cog):
     
     def __init__(self, bot):
@@ -17,7 +16,8 @@ class Events(commands.Cog):
         if msg.author == self.bot.user:
             return
         else:
-            if 'bet' in msg.content.lower():
+            word_lst = (msg.content.split(' ')) # No false positives
+            if 'bet' in word_lst:
                 await msg.channel.send('OH BET!')
                 for i in range(2):
                     await msg.channel.send('BET!')
