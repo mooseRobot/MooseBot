@@ -138,7 +138,10 @@ class music(commands.Cog):
             await ctx.send("You must be in a voice channel to use this command!")
 
         # Appends requested song to queue
+        if "&" in url:
+            url = url[:url.index('&')]
         queue.append(url)
+
         if not voice.is_playing():
             async with ctx.typing():
                 player = await YTDLSource.from_url(queue[0], loop=self.bot.loop, stream=True)
