@@ -8,7 +8,7 @@ intents.members = True
 bot = commands.Bot(command_prefix=".", intents= intents, help_command = None)
 
 def is_me(ctx): # Checks if user is me
-    return ctx.author.id == 
+    return ctx.author.id == id
 
 ########### Help ###########
 
@@ -17,22 +17,15 @@ async def help(ctx):
     """
     Help command
     """
-    MyEmbed = discord.Embed(title="MooseBot Commands", url="https://github.com/mooseRobot/MooseBot", description="Available commands for MooseBot", color=0xbd0000)
+    MyEmbed = discord.Embed(title="MooseBot Help Commands", url="https://github.com/mooseRobot/MooseBot", description="Call these help menus for more commands", color=0xbd0000)
     MyEmbed.set_author(name="Created by mooseRobot", url="https://github.com/mooseRobot", icon_url="https://avatars.githubusercontent.com/u/111679444?s=400&u=e780fac96614dd28ef409f0a6e4f35f234fba5d4&v=4")
     MyEmbed.set_thumbnail(url = "https://cdn.discordapp.com/attachments/837198834593431573/1039890752563589190/IMG_17012018_223941_0.png")
-    MyEmbed.add_field(name = ".p {yt url}", value = "Plays youtube song")
-    MyEmbed.add_field(name = ".stop", value = "Stop/skips current song")
-    MyEmbed.add_field(name = ".pause", value = "Pauses current song")
-    MyEmbed.add_field(name = ".resume", value = "Resume song")
-    MyEmbed.add_field(name = ".queue", value = "Shows queue")
-    MyEmbed.add_field(name = ".join", value = "Joins the vc")
-    MyEmbed.add_field(name = ".disconnect", value = "Disconnects from vc")
-    MyEmbed.add_field(name = ".trending {subreddit}", value = "Pulls top hot post from a subreddit")
+    MyEmbed.add_field(name = ".help_music", value = "Help menu for music commands")
+    MyEmbed.add_field(name = ".help_reddit", value = "Help menu for available commands for reddit")
+    MyEmbed.add_field(name = ".help_leveling", value = "Help menu for leveling and coins")
+    MyEmbed.add_field(name = ".help_shop", value = "Shop menu for available commands to purchase WIP")
+    MyEmbed.add_field(name = ".help_games", value = "Available games to play to bet coins WIP")
     MyEmbed.add_field(name = ".coinflip", value = "Flips a coin")
-    MyEmbed.add_field(name = ".cag", value = "Sends top picture from /r/kpics")
-    MyEmbed.add_field(name = ".cagf", value = "For the boys")
-    MyEmbed.add_field(name = ".sigma", value = "Sigma circlejerk")
-    MyEmbed.add_field(name = ".voicekick", value = "Starts a vote kick a user from a voice channel")
     await ctx.send(embed = MyEmbed)
 
 ##################################################################
@@ -53,8 +46,9 @@ async def on_member_join(member):
     # dmchannel = await member.create_dm() # creaing a dmchannel to dm a message. Needs await since its an async func
     # await dmchannel.send(f"Welcome to {guildname}") # Welcomes member
     print(f"{member.name} has joined {guildname}")
-    await bot.get_channel(291813712338354176).send(f"Welcome {member.mention} to {guildname}!")
-    await bot.get_channel(291813712338354176).send("https://cdn.discordapp.com/attachments/837198834593431573/1039890752563589190/IMG_17012018_223941_0.png")
+    general = discord.utils.get(member.guild.channels, name="general").id
+    await bot.get_channel(general).send(f"Welcome {member.mention} to {guildname}!")
+    await bot.get_channel(general).send("https://cdn.discordapp.com/attachments/837198834593431573/1039890752563589190/IMG_17012018_223941_0.png")
 
 
 ##################################################################
@@ -199,7 +193,27 @@ async def reload_cag(ctx):
     bot.reload_extension("Cag")
     await ctx.channel.send("Cag extension reloaded")
 
+### Leveling cog load/unload/reload ###
+@bot.command()
+@commands.check(is_me)
+async def load_level(ctx):
+    bot.load_extension("Levels")
+    await ctx.channel.send("Levels extension loaded")
+
+@bot.command()
+@commands.check(is_me)
+async def unload_level(ctx):
+    bot.unload_extension("Levels")
+    await ctx.channel.send("Levels extension unloaded")
+
+@bot.command()
+@commands.check(is_me)
+async def reload_level(ctx):
+    bot.reload_extension("Levels")
+    await ctx.channel.send("Levels extension reloaded")
+    
 bot.load_extension('Cag')
 bot.load_extension("Events")
 bot.load_extension("Music")
-bot.run('')
+bot.load_extension("Levels")
+bot.run('bot_token')
