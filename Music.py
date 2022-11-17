@@ -92,8 +92,9 @@ class music(commands.Cog):
         # Disconnects from inactivity
         await asyncio.sleep(90)
         await voice.disconnect()
-        await ctx.send("Disconnected due to inactivity.")
-        self.vc_connected = False
+        if self.vc_connected = True:
+            await ctx.send("Disconnected due to inactivity.")
+            self.vc_connected = False
 
     
     # Test vc_connected attribute
@@ -164,8 +165,9 @@ class music(commands.Cog):
                 await asyncio.sleep(90) #wait 1 minute and 30 seconds
                 if not voice.is_playing():
                     await voice.disconnect()
-                    await ctx.send("Disconnected due to inactivity.")
-                    self.vc_connected = False
+                    if self.vc_connected = True:
+                        await ctx.send("Disconnected due to inactivity.")
+                        self.vc_connected = False
 
     #Stop, Resume and Pause
     @commands.command()
